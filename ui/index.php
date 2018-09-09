@@ -13,12 +13,20 @@
 		$modelUrl = "data/". $_GET["model"] ."/model";
 	}
 
+	$idVariable = "data/RD bank/model bank/id";
+	if (isset($_GET["id"])) {
+		$idVariable = "". $_GET["id"] ."";
+	}
+
+
 	$multipartX3dUrl = $modelUrl . "/multiPart.x3d";
 	$multipartJsonUrl = $modelUrl . "/multiPart.json";
 	$metaDataJsonUrl = $modelUrl . "/metaData.json";
 ?>
 <script type="text/javascript">  
 	var modelUrl		 = "<?php echo $modelUrl; ?>"; 
+	var idVariable	     = "<?php echo $idVariable; ?>";
+
 	
 	var multipartX3dUrl  = "<?php echo $multipartX3dUrl; ?>"; 
 	var multipartJsonUrl = "<?php echo $multipartJsonUrl; ?>"; 
@@ -72,6 +80,7 @@
     	<link rel="stylesheet" href="scripts/PackageExplorer/zt.css" type="text/css">
 	
 	<script type="text/javascript" src="scripts/CanvasFilter/CanvasFilterController.js"></script>
+	<script type="text/javascript" src="scripts/URLParameter/URLParameterController.js"></script>
 	<script type="text/javascript" src="scripts/CanvasMark/CanvasMarkController.js"></script>
 	<script type="text/javascript" src="scripts/CanvasFlyTo/CanvasFlyToController.js"></script>
 	<script type="text/javascript" src="scripts/CanvasHover/CanvasHoverController.js"></script>

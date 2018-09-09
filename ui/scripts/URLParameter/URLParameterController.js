@@ -1,0 +1,29 @@
+var urlParameterController = (function() {
+    
+    function initialize(){
+    }
+	
+	function activate(){
+		console.log(idVariable);
+
+		setTimeout(function() {
+			
+			var entity = model.getEntityById(idVariable);
+
+			if (!entity) return;
+
+			var applicationEvent = {			
+				sender: urlParameterController,
+				entities: [entity]
+			};
+			
+			events.selected.on.publish(applicationEvent);		
+		}, 2000);
+}
+
+
+    return {
+        initialize: initialize,
+		activate: activate
+    };    
+})();
