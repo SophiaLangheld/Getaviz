@@ -17,6 +17,13 @@
 	if (isset($_GET["id"])) {
 		$idVariable = "". $_GET["id"] ."";
 	}
+    //12.09.2018
+	$idListe = array("data/RD bank/model bank/id id/liste");
+	if (isset($_GET["marked"])) {
+		$idListe = explode(",", $_GET["marked"]);
+	}
+
+	// Trennen der Liste: split-Funktion  --> $liste = split($string, ",");
 
 
 	$multipartX3dUrl = $modelUrl . "/multiPart.x3d";
@@ -25,7 +32,8 @@
 ?>
 <script type="text/javascript">  
 	var modelUrl		 = "<?php echo $modelUrl; ?>"; 
-	var idVariable	     = "<?php echo $idVariable; ?>";
+	var idVariable	     = "<?php echo $idVariable; ?>";  //id
+	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];     //liste
 
 	
 	var multipartX3dUrl  = "<?php echo $multipartX3dUrl; ?>"; 

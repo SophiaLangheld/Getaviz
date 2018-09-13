@@ -10,14 +10,30 @@ var urlParameterController = (function() {
 			
 			var entity = model.getEntityById(idVariable);
 
-			if (!entity) return;
+			if (entity) {
+
+				var applicationEvent = {			
+					sender: urlParameterController,
+					entities: [entity]
+				};
+				
+				events.selected.on.publish(applicationEvent);
+			}
+			
+			//idliste
+			if (!Array.isArray(idListe)) return;
+
+			var  markedEntities = idListe.map(model.getEntityById); //model.getEntityById(idListe[0]);
+
+			if (!markedEntities) return;
 
 			var applicationEvent = {			
 				sender: urlParameterController,
-				entities: [entity]
+				entities: markedEntities
 			};
 			
-			events.selected.on.publish(applicationEvent);		
+			events.marked.on.publish(applicationEvent);
+
 		}, 2000);
 }
 
