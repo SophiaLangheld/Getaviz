@@ -135,12 +135,12 @@ var canvasMarkController = (function() {
 
 
 	function onEntityMarked(applicationEvent) {
-		var entity = applicationEvent.entities[0];	
-		
-		if(entity.hovered){
-			canvasManipulator.unhighlightEntities([entity]);			
-		}
-		canvasManipulator.changeColorOfEntities([entity], controllerConfig.markingColor);
+		applicationEvent.entities.forEach(function(entity) {	
+			if(entity.hovered){
+				canvasManipulator.unhighlightEntities([entity]);			
+			}
+			canvasManipulator.changeColorOfEntities([entity], controllerConfig.markingColor);
+		});
 	}
 
 	function onEntityUnmarked(applicationEvent) {
