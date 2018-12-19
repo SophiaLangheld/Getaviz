@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
 <!-- pass url parameters to javascript variables -->
+
+
 <?php 		
 	
 	$setupUrl = "setups/default.js";
@@ -13,15 +15,35 @@
 		$modelUrl = "data/". $_GET["model"] ."/model";
 	}
 
+
+	// stateUrl  02.12.28
+	/*$stateUrl = "data/RD bank/model bank/state";
+	if (isset($_GET["state"])) {
+		$stateUrl = "data/". $_GET["state"] ."/state";
+	}
+
+   //von Sebastian
+	if (isset($_GET["hash"])) {
+		// prüfen: existiert ./data/ . $_GET["hash"]
+		// wenn ja: $state = Datei-inhalt
+	}*/
+
 	$idVariable = "data/RD bank/model bank/id";
 	if (isset($_GET["id"])) {
 		$idVariable = "". $_GET["id"] ."";
 	}
+
+    //stateSelected 27.11.18
+	/*$stateSelected = "data/RD bank/model bank/state";
+	if (isset($_GET["id"])) {
+		$stateSelected = "". $_GET["id"] ."";
+	}*/
+
     //12.09.2018
 	$idListe = array("data/RD bank/model bank/id id/liste");
 	if (isset($_GET["marked"])) {
 		$idListe = explode(",", $_GET["marked"]);
-	}
+	} 
 
 	// Trennen der Liste: split-Funktion  --> $liste = split($string, ",");
 
@@ -29,9 +51,11 @@
 	$multipartX3dUrl = $modelUrl . "/multiPart.x3d";
 	$multipartJsonUrl = $modelUrl . "/multiPart.json";
 	$metaDataJsonUrl = $modelUrl . "/metaData.json";
+	//$metaStateJsonUrl = "state.php?hash=" . $_GET["hash"];
 ?>
 <script type="text/javascript">  
 	var modelUrl		 = "<?php echo $modelUrl; ?>"; 
+	var stateUrl		 = "<?php echo $stateUrl; ?>"; //stateurl 02.12.2018
 	var idVariable	     = "<?php echo $idVariable; ?>";  //id
 	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];     //liste
 
@@ -39,6 +63,7 @@
 	var multipartX3dUrl  = "<?php echo $multipartX3dUrl; ?>"; 
 	var multipartJsonUrl = "<?php echo $multipartJsonUrl; ?>"; 
 	var metaDataJsonUrl  = "<?php echo $metaDataJsonUrl; ?>"; 
+	
 </script>
 
 
