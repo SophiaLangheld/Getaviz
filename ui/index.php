@@ -63,6 +63,9 @@
 	var multipartJsonUrl = "<?php echo $multipartJsonUrl; ?>"; 
 	var metaDataJsonUrl  = "<?php echo $metaDataJsonUrl; ?>"; 
 	var metaStateJsonUrl  = "<?php echo $metaStateJsonUrl; ?>"; 
+
+	var canvasId = "x3dom-x3dElement-canvas";
+    var visMode = "x3dom";
 </script>
 
 
@@ -101,6 +104,8 @@
 	<script type="text/javascript" src="libs/jqwidgets/jqxcheckbox.js"></script>
     <script type="text/javascript" src="libs/jqwidgets/jqxcombobox.js"></script>
     <script type="text/javascript" src="libs/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="libs/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="libs/jqwidgets/jqxslider.js"></script>
 	
     <link rel="stylesheet" href="libs/jqwidgets/styles/jqx.base.css" type="text/css" />
     <link rel="stylesheet" href="libs/jqwidgets/styles/jqx.metro.css" type="text/css" />
@@ -132,9 +137,21 @@
 	<script type="text/javascript" src="scripts/Legend/LegendController.js"></script>
     <script type="text/javascript" src="scripts/Systeminfo/SysteminfoController.js"></script>
     <script type="text/javascript" src="scripts/PatternConnector/PatternConnectorController.js"></script>
-    <script type="text/javascript" src="scripts/EdgeConfigurator/EdgeConfiguratorController.js"></script>
+    <script type="text/javascript" src="scripts/Configuration/ConfigurationController.js"></script>
     <script type="text/javascript" src="scripts/PatternExplorer/PatternExplorerController.js"></script>
     <script type="text/javascript" src="scripts/VersionExplorer/VersionExplorerController.js"></script>
+    <script type="text/javascript" src="scripts/IssueExplorer/IssueExplorerController.js"></script>
+    
+     <!-- filter -->
+  <script type="text/javascript" src="scripts/Filter/Helpers/Constants.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Helpers/DOMHelper.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Helpers/RelationHelper.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Helpers/FilterHelper.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Helpers/TransformationHelper.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Classes/Filter.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Classes/Container.js"></script>
+  <script type="text/javascript" src="scripts/Filter/Classes/Layer.js"></script>
+  <script type="text/javascript" src="scripts/Filter/FilterController.js"></script>
 	
 	<!--user interface-->		
 	<script type="text/javascript" src="scripts/DefaultLogger.js"></script>
