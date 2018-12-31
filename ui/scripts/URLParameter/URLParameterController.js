@@ -26,30 +26,32 @@ var urlParameterController = (function() {
 			events.selected.on.publish(applicationEvent);
 
 			// TODO: liste sammeln und alles markieren
+			
 			metaStateJson.marked.forEach(function(element){
 				var entity = model.getEntityById(element);
 				if (entity) {
-
-					var applicationEvent = {			
-						sender: urlParameterController,
-						entities: [entity]
-					};
-				
-					events.marked.on.publish(applicationEvent);
+					entities.push(entity);
+					
 				}
 			});
+			var applicationEvent = {			
+				sender: urlParameterController,
+				entities: entities
+			};
+			events.marked.on.publish(applicationEvent);
+
+
 			metaStateJson.filtered.forEach(function(element){
 				var entity = model.getEntityById(element);
 				if (entity) {
-
-					var applicationEvent = {			
-						sender: urlParameterController,
-						entities: [entity]
-					};
-				
-					events.filtered.on.publish(applicationEvent);
+					entities.push(entity);
 				}
 			});
+			var applicationEvent = {			
+				sender: urlParameterController,
+				entities: entities
+			};
+			events.filtered.on.publish(applicationEvent);
 
 			
 		}
@@ -121,6 +123,7 @@ var urlParameterController = (function() {
         console.log("myHashwert: "+myHashwert);
 
 		var url = window.location.toString();
+
 		url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>" + myString;
 
 
