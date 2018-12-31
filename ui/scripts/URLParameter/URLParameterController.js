@@ -11,21 +11,22 @@ var urlParameterController = (function() {
 
 		function initializeApplication(metaStateJson){
 			//create entity state
+			
 			let entities = [];
 			metaStateJson.selected.forEach(function(element){
 				var entity = model.getEntityById(element);
 				if (entity) {
 					entities.push(entity);
 				}
-			});
-			// let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null)
+			}); 
+			//let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
 			};
 			events.selected.on.publish(applicationEvent);
 
-			// TODO: liste sammeln und alles markieren
+			// TODO: liste sammeln und alles markieren 31.01.2018
 			
 			metaStateJson.marked.forEach(function(element){
 				var entity = model.getEntityById(element);
@@ -34,6 +35,7 @@ var urlParameterController = (function() {
 					
 				}
 			});
+			//let entities = metaStateJson.marked.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
@@ -47,6 +49,7 @@ var urlParameterController = (function() {
 					entities.push(entity);
 				}
 			});
+			//let entities = metaStateJson.filtered.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
