@@ -18,27 +18,18 @@
 		$stateUrl = "". $_GET["state"] ."";
         //$hashFile = file_get_contents($stateUrl);
 	}
-//
+
 	$idVariable = "data/RD bank/model bank/id";
 	if (isset($_GET["id"])) {
 		$idVariable = "". $_GET["id"] ."";
 	}
-//
+
 	$idListe = array("data/RD bank/model bank/id id/liste");
 	if (isset($_GET["marked"])) {
 		$idListe = explode(",", $_GET["marked"]);
 	}
 
-	// stateselected
-	$stateselected = array("");
-	if (isset($_GET["id"])) {
-		$idListe = explode(",", $_GET["id"]);
-	}
-	//statemarked
-	$statemarked = array("");
-	if (isset($_GET["marked"])) {
-		$idListe = explode(",", $_GET["marked"]);
-	}
+
 
 
 	$multipartX3dUrl = $modelUrl . "/multiPart.x3d";
@@ -56,8 +47,7 @@
 	var modelUrl		 = "<?php echo $modelUrl; ?>"; 
 	var idVariable	     = "<?php echo $idVariable; ?>";//ID
 	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];//IDliste
-	var stateselected	         = ["<?php echo join('", "', $stateselected); ?>"];
-	var statemarked	             = ["<?php echo join('", "', $statemarked); ?>"];
+
 
 	var multipartX3dUrl  = "<?php echo $multipartX3dUrl; ?>"; 
 	var multipartJsonUrl = "<?php echo $multipartJsonUrl; ?>"; 

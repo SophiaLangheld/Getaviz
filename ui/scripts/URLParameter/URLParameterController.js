@@ -51,8 +51,7 @@ var urlParameterController = (function() {
 				}
 			});
 
-			//state.initialize(metaStateJson);
-	        //console.log(metaStateJson);
+			
 		}
     }
 	
@@ -72,43 +71,7 @@ var urlParameterController = (function() {
 		codeWindowButton2.appendChild(fullScreenImage2);
 		$("ul.jqx-menu-ul")[0].appendChild(codeWindowButton2);
 
-/*
-		setTimeout(function() {
-			
-		//idVariable
-		var entity = model.getEntityById(idVariable);
 
-		if (entity) {
-
-			var applicationEvent = {			
-				sender: urlParameterController,
-				entities: [entity]
-			};
-			
-			events.selected.on.publish(applicationEvent);
-		}
-
-
-		
-		//idliste
-		if (!Array.isArray(idListe)) return;
-
-		var  markedEntities = idListe.map(model.getEntityById); //model.getEntityById(idListe[0]);
-
-		if (!markedEntities) return;
-
-		var applicationEvent = {			
-			sender: urlParameterController,
-			entities: markedEntities
-		};
-		
-		events.marked.on.publish(applicationEvent);
-
-
- 
-
-		}, 2000);
-*/		
 	}
 
 
@@ -128,25 +91,13 @@ var urlParameterController = (function() {
 	function openWindow2(){
 		
 		var state = {
-			"selected": [
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-						]
+			"selected": []
 						//[...events.selected.getEntities().keys()]
 			,
-			"marked": [
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-						]
+			"marked": []
 						//[...events.marked.getEntities().keys()]
 			,
-			"filtered": [
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-						]//[...events.filtered.getEntities().keys()]
+			"filtered": []//[...events.filtered.getEntities().keys()]
 		};
 		
 		var selectedEntities = events.selected.getEntities();
@@ -168,14 +119,10 @@ var urlParameterController = (function() {
 		var myString=JSON.stringify(state);
         var myHashwert=JSON.stringify(state).hashCode();
         console.log("myHashwert: "+myHashwert);
-		// TODO: ids
-		//url = url ;
-		var url = "localhost/getaviz-mo/ui/index.php?setup=web/rd bank&model=rd bank";
-		//url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>";
+
+		var url = window.location.toString();
 		url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>" + myString;
-		/*codeWindow2 = window.open(url, "");
-		// lade Quellcode, des zuletzt betrachteten Objekts
-		codeWindow2.addEventListener('load', displayCodeChild, true);*/
+
 
 		$("#DisplayWindow").remove();
 		var loadPopup = application.createPopup("url",  
