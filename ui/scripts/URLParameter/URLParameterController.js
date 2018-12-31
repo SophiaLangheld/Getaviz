@@ -1,26 +1,63 @@
 var urlParameterController = (function() {
     
     function initialize(){
-
-		/*$(document).ready(function () {
-			if(!window["state"]){
-				console.log("No state definition found!");
-				return;
-			}
-		  $.getJSON( metaStateJsonUrl, initializeApplication);
+		$(document).ready(function () {
+			$.getJSON( metaStateJsonUrl, initializeApplicationTimeout);
 		});
 
-		function initializeApplication(state){
+		function initializeApplicationTimeout(metaStateJson){
+			setTimeout(() => initializeApplication(metaStateJson), 2000);
+		}
+
+		function initializeApplication(metaStateJson){
 			//create entity state
-	        console.log(state);
-		}*/
-     
-		
+			let entities = [];
+			metaStateJson.selected.forEach(function(element){
+				var entity = model.getEntityById(element);
+				if (entity) {
+					entities.push(entity);
+				}
+			});
+			// let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null)
+			var applicationEvent = {			
+				sender: urlParameterController,
+				entities: entities
+			};
+			events.selected.on.publish(applicationEvent);
+
+			// TODO: liste sammeln und alles markieren
+			metaStateJson.marked.forEach(function(element){
+				var entity = model.getEntityById(element);
+				if (entity) {
+
+					var applicationEvent = {			
+						sender: urlParameterController,
+						entities: [entity]
+					};
+				
+					events.marked.on.publish(applicationEvent);
+				}
+			});
+			metaStateJson.filtered.forEach(function(element){
+				var entity = model.getEntityById(element);
+				if (entity) {
+
+					var applicationEvent = {			
+						sender: urlParameterController,
+						entities: [entity]
+					};
+				
+					events.filtered.on.publish(applicationEvent);
+				}
+			});
+
+			//state.initialize(metaStateJson);
+	        //console.log(metaStateJson);
+		}
     }
 	
-	function activate() {
-		//console.log(initState);
-
+	function activate(){
+		console.log("idVariable: "+ idVariable);
 
 		//URL-button                            
 		var codeWindowButton2 = document.createElement("BUTTON");
@@ -29,152 +66,147 @@ var urlParameterController = (function() {
 		codeWindowButton2.addEventListener("click", openWindow2, false);
 		
 		var fullScreenImage2 = document.createElement("IMG");
-		fullScreenImage2.src = "scripts/SourceCode/images/idlink.png";
+		fullScreenImage2.src = "scripts/URLparameter/images/idlink.png";
 		fullScreenImage2.style = "width: 25px; height: 20px;";
 						
 		codeWindowButton2.appendChild(fullScreenImage2);
 		$("ul.jqx-menu-ul")[0].appendChild(codeWindowButton2);
 
-
+/*
 		setTimeout(function() {
-			//idVariable
-			var entity = model.getEntityById(idVariable);
-
-			if (entity) {
-
-				var applicationEvent = {			
-					sender: urlParameterController,
-					entities: [entity]
-				};
-				
-				events.selected.on.publish(applicationEvent);
-			}
-            /*//stateSelected 27.11.18
-			var entity = model.getEntityById(stateSelected);
-
-			if (entity) {
-
-				var applicationEvent = {			
-					sender: urlParameterController,
-					entities: [entity]
-				};
-				
-				events.selected.on.publish(applicationEvent);
-			}
-			let state = stateSelected;
-			json.stringify(state).hashcode;*/
 			
-			//idliste
-			if (!Array.isArray(idListe)) return;
+		//idVariable
+		var entity = model.getEntityById(idVariable);
 
-			var  markedEntities = idListe.map(model.getEntityById); //model.getEntityById(idListe[0]);
-
-			if (!markedEntities) return;
+		if (entity) {
 
 			var applicationEvent = {			
 				sender: urlParameterController,
-				entities: markedEntities
+				entities: [entity]
 			};
 			
-			events.marked.on.publish(applicationEvent);
+			events.selected.on.publish(applicationEvent);
+		}
 
+
+		
+		//idliste
+		if (!Array.isArray(idListe)) return;
+
+		var  markedEntities = idListe.map(model.getEntityById); //model.getEntityById(idListe[0]);
+
+		if (!markedEntities) return;
+
+		var applicationEvent = {			
+			sender: urlParameterController,
+			entities: markedEntities
+		};
+		
+		events.marked.on.publish(applicationEvent);
+
+
+ 
 
 		}, 2000);
-
+*/		
 	}
+
+
+	String.prototype.hashCode = function() {
+		var hash = 0, i, chr;
+		if (this.length === 0) return hash;
+		for (i = 0; i < this.length; i++) {
+		  chr   = this.charCodeAt(i);
+		  hash  = ((hash << 5) - hash) + chr;
+		  hash |= hash; // Convert to 32bit integer
+		}
+		
+		return hash;
+		
+	};
 	
-			
-			String.prototype.hashCode = function() {
-				var hash = 0, i, chr;
-				if (this.length === 0) return hash;
-				for (i = 0; i < this.length; i++) {
-				  chr   = this.charCodeAt(i);
-				  hash  = ((hash << 5) - hash) + chr;
-				  hash = hash & hash; // Convert to 32bit integer
-				}
-				
-				return hash;
-				
-			};
-			
-
-			  
-
-   // openWindow2 
-   function openWindow2(){
-	var url = "localhost/getaviz/ui/index.php?setup=web/rd bank&model=rd bank";
-
-	// TODO: ids
-	//url = url + "&marked=" + events.marked.getEntities() + "The full URL of this page is:<br>" + window.location.href;
-    url =myHashwert +"<br>" + url + "&state=" + myHashwert + "<br>The full URL of this page is:<br>" + window.location.href +"<br>" + myString;
-	/*codeWindow2 = window.open(url, "");
-	// lade Quellcode, des zuletzt betrachteten Objekts
-	codeWindow2.addEventListener('load', displayCodeChild, true);*/
-
-	var loadPopup = application.createPopup("url",  
-    url, "DisplayWindow");
-	document.body.appendChild(loadPopup);
-	$("#DisplayWindow").css("display", "block").jqxWindow({
-			theme: "metro",
-			width: 700,
-			height: 500,
-			isModal: true,
-			autoOpen: true,
-			resizable: false
-	});
-
-
-
-
-		//die JSON-Datei auf dem Server gespeichert werden =====> nach den Code funktioniert nicht 
+	function openWindow2(){
 		
-
-		
-		var state =
-				[
-					{"selected": [
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-								]
-								//s[...events.selected.getEntities().keys()]
-					},
-					{"marked": [
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-								]
-					},
-					{"filtered": [
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
-									"ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
-								]
-					}
-		];
-		var myString=JSON.stringify(state);
-		var myHashwert=JSON.stringify(state).hashCode();
-		console.log(myHashwert);
-
-		var xhr = new XMLHttpRequest();
-		var url = "state.php";
-        xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState === 4 && xhr.status === 200) {
-		 
-				 console.log("es ist ok");
-			}
+		var state = {
+			"selected": [
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
+						]
+						//[...events.selected.getEntities().keys()]
+			,
+			"marked": [
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
+						]
+						//[...events.marked.getEntities().keys()]
+			,
+			"filtered": [
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_c98d43c27394ae1dc762cf3737e9866aac17994e",
+							// "ID_b105434ea3463bc25fba32b684b5e86fd35ee57c"
+						]//[...events.filtered.getEntities().keys()]
 		};
-		xhr.send(JSON.stringify({
-			hash: myHashwert,
-			state: state,
-		}));// 为什么 ohne  xhr.onreadystatechange = function () { ... 括号里有东西就会错误呢
-                              // 只允许send 一个吗
-		window.alert("ich bin here");
-		// xhr.send(state);  // wieso  state geht nicht 
-	
+		
+		var selectedEntities = events.selected.getEntities();
+		state.selected = new Array();
+		selectedEntities.forEach(function(element){
+			state.selected.push(element.id);
+		});
+		var markedEntities = events.marked.getEntities();
+		state.marked = new Array();
+		markedEntities.forEach(function(element){
+			state.marked.push(element.id);
+		});
+		var filteredEntities = events.filtered.getEntities();
+		state.filtered = new Array();
+		filteredEntities.forEach(function(element){
+			state.filtered.push(element.id);
+		});
+
+		var myString=JSON.stringify(state);
+        var myHashwert=JSON.stringify(state).hashCode();
+        console.log("myHashwert: "+myHashwert);
+		// TODO: ids
+		//url = url ;
+		var url = "localhost/getaviz-mo/ui/index.php?setup=web/rd bank&model=rd bank";
+		//url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>";
+		url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>" + myString;
+		/*codeWindow2 = window.open(url, "");
+		// lade Quellcode, des zuletzt betrachteten Objekts
+		codeWindow2.addEventListener('load', displayCodeChild, true);*/
+
+		$("#DisplayWindow").remove();
+		var loadPopup = application.createPopup("url",  
+		url, "DisplayWindow");
+		document.body.appendChild(loadPopup);
+		$("#DisplayWindow").css("display", "block").jqxWindow({
+				theme: "metro",
+				width: 700,
+				height: 500,
+				isModal: true,
+				autoOpen: true,
+				resizable: false
+		});
+
+        var xhr = new XMLHttpRequest();
+        var url = "state.php";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+ 
+		      console.log("successfull");
+	        }
+        }; 
+        xhr.send(JSON.stringify({
+	        hash: myHashwert,
+	        state: myString,
+        }));
 	}
+
+
 
 
     return {
