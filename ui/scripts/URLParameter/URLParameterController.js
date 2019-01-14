@@ -12,14 +12,14 @@ var urlParameterController = (function() {
 		function initializeApplication(metaStateJson){
 			//create entity state
 			
-			/*let entities = [];
+			let entities = [];
 			metaStateJson.selected.forEach(function(element){
 				var entity = model.getEntityById(element);
 				if (entity) {
 					entities.push(entity);
 				}
-			}); */
-			let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null);
+			}); 
+			//let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
