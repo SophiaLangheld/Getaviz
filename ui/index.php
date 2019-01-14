@@ -44,7 +44,8 @@
 	}
 ?>
 <script type="text/javascript">  
-	var modelUrl		 = "<?php echo $modelUrl; ?>"; 
+	var modelUrl		 = "<?php echo $modelUrl; ?>";
+	var stateUrl		 = "<?php echo $stateUrl; ?>"; 
 	var idVariable	     = "<?php echo $idVariable; ?>";//ID
 	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];//IDliste
 
