@@ -129,7 +129,7 @@ var urlParameterController = (function() {
 
 		var url = window.location.toString();
 
-		url =myHashwert +"<br>" + url + "&state=" + myHashwert +"<br>" + myString;
+		url ="StateID:" + myHashwert +"<br>" + "URL:" + url + "&state=" + myHashwert +"<br>" + "Famix:" + myString;
 
 
 		$("#DisplayWindow").remove();
