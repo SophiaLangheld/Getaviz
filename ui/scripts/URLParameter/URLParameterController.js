@@ -50,8 +50,7 @@ var urlParameterController = (function() {
 					entities.push(entity);
 				}
 			});
-			//let 
-			//entities = metaStateJson.filtered.map(element => model.getEntityById(element)).filter(element => element != null);
+			//let entities = metaStateJson.filtered.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
@@ -91,9 +90,24 @@ var urlParameterController = (function() {
 		  hash |= hash; // Convert to 32bit integer
 		}
 		
-		return hash;
+		//return Math.abs(hash);
+		if (hash<0)
+			return Math.abs(hash * 10);
+		else
+			return Math.abs(hash * 10) + 1;
 		
 	};
+// 	String.prototype.hashCode = function(){
+//     var hash = 0;
+//     if (this.length == 0) return hash;
+//     for (i = 0; i < this.length; i++) {
+//         char = this.charCodeAt(i);
+//         hash = ((hash<<5)-hash)+char;
+//         hash = hash & hash; // Convert to 32bit integer
+//     }
+//     return hash;
+// }
+	 
 	
 	function openWindow2(){
 		
@@ -123,14 +137,27 @@ var urlParameterController = (function() {
 			state.filtered.push(element.id);
 		});
 
-		var myString=JSON.stringify(state);
+		var myString=JSON.stringify(state,null,'\t');
         var myHashwert=JSON.stringify(state).hashCode();
         console.log("myHashwert: "+myHashwert);
 
-		var url = window.location.toString();
+		var url = window.location.toString().split("&state=")[0];
 
-		url ="StateID:" + myHashwert +"<br>" + "URL:" + url + "&state=" + myHashwert +"<br>" + "Famix:" + myString;
+		/*function createlinksCopyButton(context, func) {
+			var linksCopybutton = document.createElement("input");
+			linksCopybutton.type = "button";
+			linksCopybutton.value = "im a button";
+			linksCopybutton.onclick = func;
+			context.appendChild(linksCopybutton);
+		}*/
+		//linksCopybutton                            
+		//var linksCopybutton = document.createElement("BUTTON");
+		//linksCopybutton.type = "button";
+		//linksCopybutton.style = "width: 10%;height: 25px;margin: 2px 0px -2px 2px;";
+		//linksCopybutton.addEventListener("click", openWindow2, false);
 
+		url ="StateID: "+ myHashwert +"<br /><br />URL: <input id='copyField' style='width:80%' readonly value='" + url + "&state=" + myHashwert
+		+"'> <a onclick='copyInput()' href='javascript:void(0);'>share link</a><br /><br />Famix: <pre style='margin:0'>"+myString+"</pre>";
 
 		$("#DisplayWindow").remove();
 		var loadPopup = application.createPopup("url",  
@@ -158,14 +185,17 @@ var urlParameterController = (function() {
         xhr.send(JSON.stringify({
 	        hash: myHashwert,
 	        state: myString,
-        }));
+		}));
+
 	}
-
-
-
 
     return {
         initialize: initialize,
 		activate: activate
-    };    
+	};    
 })();
+
+var copyInput = (function() {
+	document.getElementById('copyField').select();
+	document.execCommand("copy");
+});
