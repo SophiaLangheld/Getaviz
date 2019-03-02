@@ -166,7 +166,9 @@
 								
 				<Transform id="addedElements"></Transform>
 				
+				
 				<MultiPart id="multiPart" mapDEFToID="true" url="<?php echo $multipartX3dUrl; ?>" urlIDMap="<?php echo $multipartJsonUrl; ?>"></MultiPart>							
+				
 
 			</scene>
 		</x3d>                    

@@ -89,14 +89,13 @@ var urlParameterController = (function() {
 		  hash  = ((hash << 5) - hash) + chr;
 		  hash |= hash; // Convert to 32bit integer
 		}
-		
-		//return Math.abs(hash);
 		if (hash<0)
 			return Math.abs(hash * 10);
 		else
-			return Math.abs(hash * 10) + 1;
-		
+			return Math.abs(hash * 10) + 1;	
 	};
+	
+	//return Math.abs(hash);
 // 	String.prototype.hashCode = function(){
 //     var hash = 0;
 //     if (this.length == 0) return hash;
@@ -156,8 +155,8 @@ var urlParameterController = (function() {
 		//linksCopybutton.style = "width: 10%;height: 25px;margin: 2px 0px -2px 2px;";
 		//linksCopybutton.addEventListener("click", openWindow2, false);
 
-		url ="StateID: "+ myHashwert +"<br /><br />URL: <input id='copyField' style='width:80%' readonly value='" + url + "&state=" + myHashwert
-		+"'> <a onclick='copyInput()' href='javascript:void(0);'>share link</a><br /><br />Famix: <pre style='margin:0'>"+myString+"</pre>";
+		url ="<strong>StateID:</strong>"+ myHashwert +"<br /><br /><strong>URL:</strong> <input id='copyField' style='width:80%' readonly value='" + url + "&state=" + myHashwert
+		+"'> <a onclick='copyInput()' href='javascript:void(0);'><strong>share link</strong></a><br /><br /><strong>Famix:</strong> <pre style='margin:0'>"+myString+"</pre>";
 
 		$("#DisplayWindow").remove();
 		var loadPopup = application.createPopup("url",  
