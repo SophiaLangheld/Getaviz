@@ -6,8 +6,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     
     $state = $data["state"];
     $myHashwert = $data["hash"];
+   // $viewMatrix = $data["viewMatrix"];
+    //$centerRotation = $data["centerRotation"];
     echo "$myHashwert";
     echo "\n$state";
+    //echo "\n$viewMatrix";
+    //echo "\n$centerRotation";
 
     echo "\nopen file\n";
     if (!file_exists('./state_data')) {

@@ -106,7 +106,8 @@ var urlParameterController = (function() {
 //     }
 //     return hash;
 // }
-	 
+	
+
 	
 	function openWindow2(){
 		
@@ -138,7 +139,31 @@ var urlParameterController = (function() {
 
 		var myString=JSON.stringify(state,null,'\t');
         var myHashwert=JSON.stringify(state).hashCode();
-        console.log("myHashwert: "+myHashwert);
+		console.log("myHashwert: "+myHashwert);
+		
+
+		/*07.04
+        //DUMMY
+        actionController.actions.keyboard.key[87].down.subscribe(getViewPoint); "W"
+        actionController.actions.keyboard.key[83].down.subscribe(setViewPoint); "S"
+        //DUMMY
+		//DUMMY
+		var myViewMatrix;
+		var myCenterRotation;
+		function getViewPoint(){
+	        //get reference of x3dom objects
+			var x3domRuntime = document.getElementById('x3dElement').runtime;
+			var viewarea = x3domRuntime.canvas.doc._viewarea;
+			var viewpoint = viewarea._scene.getViewpoint();
+		
+			myViewMatrix = viewarea.getViewMatrix();
+			console.log(myViewMatrix);
+			myCenterRotation = viewpoint.getCenterOfRotation();
+			console.log(myCenterRotation);
+		}
+		//DUMMY
+        */
+
 
 		var url = window.location.toString().split("&state=")[0];
 
@@ -183,7 +208,10 @@ var urlParameterController = (function() {
         }; 
         xhr.send(JSON.stringify({
 	        hash: myHashwert,
-	        state: myString,
+			state: myString,
+			//viewMatrix: myViewMatrix,
+			//centerRotation: myCenterRotation,
+
 		}));
 
 	}
