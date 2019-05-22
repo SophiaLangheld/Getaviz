@@ -26,7 +26,7 @@ var urlParameterController = (function() {
 			};
 			events.selected.on.publish(applicationEvent);
 
-			// TODO: liste sammeln und alles markieren 31.01.2018
+			// TODO: liste sammeln und alles markieren 31.01.2019
 			entities = new Array();
 			metaStateJson.marked.forEach(function(element){
 				var entity = model.getEntityById(element);
@@ -35,8 +35,7 @@ var urlParameterController = (function() {
 					
 				}
 			});
-			//let 
-			//entities = metaStateJson.marked.map(element => model.getEntityById(element)).filter(element => element != null);
+			//let entities = metaStateJson.marked.map(element => model.getEntityById(element)).filter(element => element != null);
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
@@ -57,7 +56,23 @@ var urlParameterController = (function() {
 			};
 			events.filtered.on.publish(applicationEvent);
 
-			
+
+			//get reference of x3dom objects
+			var x3domRuntime = document.getElementById('x3dElement').runtime;
+			var viewarea = x3domRuntime.canvas.doc._viewarea;
+			var viewpoint = viewarea._scene.getViewpoint();
+
+			if (metaStateJson.viewMatrix) {
+				Object.setPrototypeOf(metaStateJson.viewMatrix, x3dom.fields.SFMatrix4f.prototype);
+				// TODO use constructor of SFMatrix4f
+				viewpoint.setView(metaStateJson.viewMatrix);
+				viewarea._needNavigationMatrixUpdate = true;
+			}
+			if (metaStateJson.centerRotation) {
+				Object.setPrototypeOf(metaStateJson.viewMatrix, x3dom.fields.SFVec4f.prototype);
+				// TODO: use constructor
+				viewpoint.setCenterOfRotation(metaStateJson.centerRotation);
+			}
 		}
     }
 	
@@ -96,16 +111,7 @@ var urlParameterController = (function() {
 	};
 	
 	//return Math.abs(hash);
-// 	String.prototype.hashCode = function(){
-//     var hash = 0;
-//     if (this.length == 0) return hash;
-//     for (i = 0; i < this.length; i++) {
-//         char = this.charCodeAt(i);
-//         hash = ((hash<<5)-hash)+char;
-//         hash = hash & hash; // Convert to 32bit integer
-//     }
-//     return hash;
-// }
+
 	
 
 	
@@ -136,49 +142,25 @@ var urlParameterController = (function() {
 		filteredEntities.forEach(function(element){
 			state.filtered.push(element.id);
 		});
+		
+		//get reference of x3dom objects
+		var x3domRuntime = document.getElementById('x3dElement').runtime;
+		var viewarea = x3domRuntime.canvas.doc._viewarea;
+		var viewpoint = viewarea._scene.getViewpoint();
+		
+		state.viewMatrix = viewarea.getViewMatrix();
+		state.centerRotation = viewpoint.getCenterOfRotation();
 
 		var myString=JSON.stringify(state,null,'\t');
         var myHashwert=JSON.stringify(state).hashCode();
 		console.log("myHashwert: "+myHashwert);
-		
 
-		/*07.04
-        //DUMMY
-        actionController.actions.keyboard.key[87].down.subscribe(getViewPoint); "W"
-        actionController.actions.keyboard.key[83].down.subscribe(setViewPoint); "S"
-        //DUMMY
-		//DUMMY
-		var myViewMatrix;
-		var myCenterRotation;
-		function getViewPoint(){
-	        //get reference of x3dom objects
-			var x3domRuntime = document.getElementById('x3dElement').runtime;
-			var viewarea = x3domRuntime.canvas.doc._viewarea;
-			var viewpoint = viewarea._scene.getViewpoint();
-		
-			myViewMatrix = viewarea.getViewMatrix();
-			console.log(myViewMatrix);
-			myCenterRotation = viewpoint.getCenterOfRotation();
-			console.log(myCenterRotation);
-		}
-		//DUMMY
-        */
+
+			 
+        
 
 
 		var url = window.location.toString().split("&state=")[0];
-
-		/*function createlinksCopyButton(context, func) {
-			var linksCopybutton = document.createElement("input");
-			linksCopybutton.type = "button";
-			linksCopybutton.value = "im a button";
-			linksCopybutton.onclick = func;
-			context.appendChild(linksCopybutton);
-		}*/
-		//linksCopybutton                            
-		//var linksCopybutton = document.createElement("BUTTON");
-		//linksCopybutton.type = "button";
-		//linksCopybutton.style = "width: 10%;height: 25px;margin: 2px 0px -2px 2px;";
-		//linksCopybutton.addEventListener("click", openWindow2, false);
 
 		url ="<strong>StateID:</strong>"+ myHashwert +"<br /><br /><strong>URL:</strong> <input id='copyField' style='width:80%' readonly value='" + url + "&state=" + myHashwert
 		+"'> <a onclick='copyInput()' href='javascript:void(0);'><strong>share link</strong></a><br /><br /><strong>Famix:</strong> <pre style='margin:0'>"+myString+"</pre>";
@@ -199,21 +181,18 @@ var urlParameterController = (function() {
         var xhr = new XMLHttpRequest();
         var url = "state.php";
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Content-Type", "application/json"); //Datentype?
         xhr.onreadystatechange = function () {
 	        if (xhr.readyState === 4 && xhr.status === 200) {
  
-		      console.log("successfull");
+			  console.log("successfull");
+			 
 	        }
         }; 
         xhr.send(JSON.stringify({
 	        hash: myHashwert,
 			state: myString,
-			//viewMatrix: myViewMatrix,
-			//centerRotation: myCenterRotation,
-
 		}));
-
 	}
 
     return {
