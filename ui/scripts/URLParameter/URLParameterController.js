@@ -172,7 +172,7 @@ var urlParameterController = (function() {
 		$("#DisplayWindow").css("display", "block").jqxWindow({
 				theme: "metro",
 				width: 700,
-				height: 500,
+				height: 600,
 				isModal: true,
 				autoOpen: true,
 				resizable: false

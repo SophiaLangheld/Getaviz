@@ -5,20 +5,18 @@ var canvasMarkController = (function() {
 		UP 			: "UP",
 		DOWN 		: "DOWN",
 		DURATION	: "DURATION"
-	}
-
-	var markingColor = "0 1 0";
-
+	};
+	
 	//config parameters	
 	var controllerConfig = {		
 		setCenterOfRotation : false,
-		
-		selectionMouseKey: 2,
+        markingColor: "0 1 0", 
+    	selectionMouseKey: 2,
 		selectionMode: SELECTION_MODES.UP,
 		selectionDurationSeconds: 0.5,
 		selectionMoveAllowed: false,
 		showProgressBar: false,
-	}
+	};
 
 	var downActionEventObject;
     
@@ -38,7 +36,7 @@ var canvasMarkController = (function() {
 		//DUMMY
 		actionController.actions.keyboard.key[87].down.subscribe(getViewPoint); "W"
 		actionController.actions.keyboard.key[83].down.subscribe(setViewPoint); "S"
-		//DUMMY
+		//DUMMY 
 
 		events.marked.on.subscribe(onEntityMarked);
 		events.marked.off.subscribe(onEntityUnmarked); 
@@ -49,6 +47,8 @@ var canvasMarkController = (function() {
 		
 		canvasManipulator.resetColorOfEntities(markedEntities);	
 	}
+
+
 
 
 
@@ -76,11 +76,9 @@ var canvasMarkController = (function() {
 		
 		viewpoint.setView(myViewMatrix)		
 		viewarea._needNavigationMatrixUpdate = true;
-
-		viewpoint.setCenterOfRotation(myCenterRotation);		
-		
+		viewpoint.setCenterOfRotation(myCenterRotation);				
 	}
-	//DUMMY
+	//DUMMY   
 
 
 	function downAction(eventObject, timestamp){
@@ -91,14 +89,14 @@ var canvasMarkController = (function() {
 			return;
 		}
 
-		if(controllerConfig.selectionMode == "DOWN"){
+		if(controllerConfig.selectionMode === "DOWN"){
 			handleOnClick(eventObject);
 			return;
 		}
 		
 		downActionEventObject = eventObject;
 
-		if(controllerConfig.selectionMode == "DURATION" && controllerConfig.showProgressBar){
+		if(controllerConfig.selectionMode === "DURATION" && controllerConfig.showProgressBar){
 			showProgressBar(eventObject);
 		}
 	}
@@ -109,12 +107,12 @@ var canvasMarkController = (function() {
 			return;
 		}
 
-		if(controllerConfig.selectionMode == "UP"){
+		if(controllerConfig.selectionMode === "UP"){
 			handleOnClick(downActionEventObject);
 			return;
 		}
 
-		if(controllerConfig.selectionMode == "DURATION" && controllerConfig.showProgressBar){
+		if(controllerConfig.selectionMode === "DURATION" && controllerConfig.showProgressBar){
 			hideProgressBar();
 		}
 	}
@@ -125,7 +123,7 @@ var canvasMarkController = (function() {
 			return;
 		}
 
-		if(controllerConfig.selectionMode != "DURATION"){
+		if(controllerConfig.selectionMode !== "DURATION"){
 			return;
 		}
 
@@ -133,7 +131,6 @@ var canvasMarkController = (function() {
 			hideProgressBar();
 			handleOnClick(downActionEventObject);
 			downActionEventObject = null;
-			return;
 		}
 	}
 
@@ -154,7 +151,7 @@ var canvasMarkController = (function() {
 		var applicationEvent = {			
 			sender: canvasMarkController,
 			entities: [eventObject.entity]
-		}	
+		};
 		
 		if(eventObject.entity.marked){
 			events.marked.off.publish(applicationEvent);		
@@ -171,14 +168,15 @@ var canvasMarkController = (function() {
 
 
 
+	
 
 	function onEntityMarked(applicationEvent) {
-		var entity = applicationEvent.entities[0];	
-		
-		if(entity.hovered){
-			canvasManipulator.unhighlightEntities([entity]);			
-		}
-		canvasManipulator.changeColorOfEntities([entity], markingColor);			
+		applicationEvent.entities.forEach(function(entity) {	
+			if(entity.hovered){
+				canvasManipulator.unhighlightEntities([entity]);			
+			}
+			canvasManipulator.changeColorOfEntities([entity], controllerConfig.markingColor);
+		});
 	}
 
 	function onEntityUnmarked(applicationEvent) {
