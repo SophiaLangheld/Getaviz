@@ -10,8 +10,6 @@ var urlParameterController = (function() {
 		}
 
 		function initializeApplication(metaStateJson){
-			//create entity state
-			
 			let entities = [];
 			metaStateJson.selected.forEach(function(element){
 				var entity = model.getEntityById(element);
@@ -19,14 +17,14 @@ var urlParameterController = (function() {
 					entities.push(entity);
 				}
 			}); 
-		//let entities = metaStateJson.selected.map(element => model.getEntityById(element)).filter(element => element != null);
+		
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
 			};
 			events.selected.on.publish(applicationEvent);
 
-			// TODO: liste sammeln und alles markieren 31.01.2019
+			
 			entities = new Array();
 			metaStateJson.marked.forEach(function(element){
 				var entity = model.getEntityById(element);
@@ -35,7 +33,7 @@ var urlParameterController = (function() {
 					
 				}
 			});
-			//let entities = metaStateJson.marked.map(element => model.getEntityById(element)).filter(element => element != null);
+			
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
@@ -49,7 +47,7 @@ var urlParameterController = (function() {
 					entities.push(entity);
 				}
 			});
-			//let entities = metaStateJson.filtered.map(element => model.getEntityById(element)).filter(element => element != null);
+			
 			var applicationEvent = {			
 				sender: urlParameterController,
 				entities: entities
@@ -64,13 +62,11 @@ var urlParameterController = (function() {
 
 			if (metaStateJson.viewMatrix) {
 				Object.setPrototypeOf(metaStateJson.viewMatrix, x3dom.fields.SFMatrix4f.prototype);
-				// TODO use constructor of SFMatrix4f
 				viewpoint.setView(metaStateJson.viewMatrix);
 				viewarea._needNavigationMatrixUpdate = true;
 			}
 			if (metaStateJson.centerRotation) {
 				Object.setPrototypeOf(metaStateJson.viewMatrix, x3dom.fields.SFVec4f.prototype);
-				// TODO: use constructor
 				viewpoint.setCenterOfRotation(metaStateJson.centerRotation);
 			}
 		}
@@ -110,21 +106,16 @@ var urlParameterController = (function() {
 			return Math.abs(hash * 10) + 1;	
 	};
 	
-	//return Math.abs(hash);
-
-	
 
 	
 	function openWindow2(){
 		
 		var state = {
 			"selected": []
-						//[...events.selected.getEntities().keys()]
 			,
 			"marked": []
-						//[...events.marked.getEntities().keys()]
 			,
-			"filtered": []//[...events.filtered.getEntities().keys()]
+			"filtered": []
 		};
 		
 		var selectedEntities = events.selected.getEntities();
@@ -154,10 +145,6 @@ var urlParameterController = (function() {
 		var myString=JSON.stringify(state,null,'\t');
         var myHashwert=JSON.stringify(state).hashCode();
 		console.log("myHashwert: "+myHashwert);
-
-
-			 
-        
 
 
 		var url = window.location.toString().split("&state=")[0];

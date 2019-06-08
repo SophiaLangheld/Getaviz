@@ -12,11 +12,10 @@
 	if (isset($_GET["model"])) {
 		$modelUrl = "data/". $_GET["model"] ."/model";
 	}
-    //stateurl
 	$stateUrl = "data/RD bank/model bank/state";
 	if (isset($_GET["state"])) {
 		$stateUrl = "". $_GET["state"] ."";
-        //$hashFile = file_get_contents($stateUrl);
+        
 	}
 
 	$idVariable = "data/RD bank/model bank/id";
@@ -46,8 +45,8 @@
 <script type="text/javascript">  
 	var modelUrl		 = "<?php echo $modelUrl; ?>";
 	var stateUrl		 = "<?php echo $stateUrl; ?>"; 
-	var idVariable	     = "<?php echo $idVariable; ?>";//ID
-	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];//IDliste
+	var idVariable	     = "<?php echo $idVariable; ?>";
+	var idListe	         = ["<?php echo join('", "', $idListe); ?>"];
 
 
 	var multipartX3dUrl  = "<?php echo $multipartX3dUrl; ?>"; 

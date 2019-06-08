@@ -9,8 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   
     echo "$myHashwert";
     echo "\n$state";
-    //echo "\n$viewMatrix";
-    //echo "\n$centerRotation";
 
     echo "\nopen file\n";
     if (!file_exists('./state_data')) {
